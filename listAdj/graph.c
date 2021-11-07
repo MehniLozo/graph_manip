@@ -37,7 +37,7 @@ void remplir()
     
         do{
             do{
-                 printf("\nvoulez vous inserer un succ de %d\n",i);
+                 printf("\nvoulez vous inserer un succ de %d (1:OUI,0:NON)\n",i);
                 scanf("%d",&ok);
             }while(!(ok == 0 || ok == 1));
             if(ok)
@@ -208,26 +208,44 @@ void composant_connexe()
     /***********************Transitive_Closure***************************/
 //void ajouter_arc(sommet x,sommet y){ //for sake of simplicity
 void ajouter_arc(unsigned x,unsigned y){ 
+    //TODO : STILL BUDDY
     struct noeud* p= (struct noeud*)malloc(sizeof(struct noeud));
     p->s = y;//in reality numero(sommet y);
+    
     p->suivant = liste_adj[x];
+    
     liste_adj[x] = p;
+    
     /*
      *  The Header-insertion(entéte) doesn't depend on the length
      *  of the list  ---> O[1]
      * */ 
-    /*
+   /* 
      //We dont care about order that is why we dont implement the following
     p->s = y;
     p->suivant = liste_adj[x]->suivant;
     if(liste_adj[x]) 
         liste_adj[x]->suivant = p;
     else 
-        liste_adj[x] = p;*/
-    
+        liste_adj[x] = p;
+    */
 }  
 
-
+void transitive_closure(){  
+    /*  So basically we're gonna look through each node and see all of the nodes
+     *  that it connects indirectly,each two nodes that are connected 
+     *  indirectly should be connected with "ajouter_arc" operation
+     * */
+    struct noeud* p ; 
+    for(int i = 0;i<nb_sommets;i++){ 
+       p = liste_adj[i]; 
+       while(p){ 
+            
+           //TODO:TO BE COMPLETED
+           p = p->suivant;
+       }
+     }
+}
     /********************************************************************/
 
     /**************************CONVERSION********************************/
@@ -287,7 +305,7 @@ void mat_to_list(){
 }
 
 int main(){
- //   struct noeud* t ;
+  struct noeud* t ;
     remplir();
     //display_checker();
     //largeur();
@@ -320,7 +338,7 @@ int main(){
     printf("Composants connexe\n");
     composant_connexe();
     printf("------------------\n");
-    /*
+   /* 
     printf("\nAjout arc 1-->5");
     printf("\nSommets directs de 1\n");
     while(t){ 
