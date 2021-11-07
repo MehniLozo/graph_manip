@@ -14,8 +14,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "graph.h"
 #include "file_tda_chaine.c"
-#define nb_sommets 7
+
+#define nb_sommets 6
 
 struct noeud* liste_adj[nb_sommets];
 //struct noeud* liste_adj2[nb_sommets]; //for matrix-->liste conversion
@@ -168,6 +170,12 @@ unsigned ieme_succ(unsigned i,unsigned s)
     /************************COMPOSANT CONNEXE**************************/
 void explorer_connexe(unsigned k)
 {
+    /*
+     *explorer_connexe : function that checks all the nodes that the current node 
+     can get connected to whether thats directly or inderectly
+     (via other nodes)
+    TODO: FUNC still under maintenance
+     * */
     struct noeud* t;
     //printf("%c  ",nom(k));
     id++;
@@ -176,20 +184,53 @@ void explorer_connexe(unsigned k)
     while(t)
     {
         if(val[t->s]==0)
+        {   printf("%d\t",k);
             explorer_connexe(t->s);
-    //    t =t->s; //still needs a configuration move
+        }
+        t =t->suivant; 
     }
 }
 void composant_connexe()
 {
-   for(int i = 0;i<nb_sommets;i++)
+    /*Cost of Complexity : n*(cost of exploring) with n : number of nodes
+     *  n+p : cost of exploring
+     *  --> O(n*(n+p))
+     *  NOTE: if the graph is represented via an adjacent matrix --> O(pow(n,3))
+     * */
+   for(int i = 1;i<nb_sommets;i++)
    {
-        for(int j = 0;j<nb_sommets;j++) val[j] = 0;
+        id = 0;
+        printf("\nRound %d\n\n",i);
+        for(int j = 1;j<nb_sommets;j++) val[j] = 0;
         explorer_connexe(i);
-        printf("\n\n");
    } 
 }
-  /**************************CONVERSION********************************/
+    /***********************Transitive_Closure***************************/
+//void ajouter_arc(sommet x,sommet y){ //for sake of simplicity
+void ajouter_arc(unsigned x,unsigned y){ 
+    struct noeud* p= (struct noeud*)malloc(sizeof(struct noeud));
+    p->s = y;//in reality numero(sommet y);
+    p->suivant = liste_adj[x];
+    liste_adj[x] = p;
+    /*
+     *  The Header-insertion(entéte) doesn't depend on the length
+     *  of the list  ---> O[1]
+     * */ 
+    /*
+     //We dont care about order that is why we dont implement the following
+    p->s = y;
+    p->suivant = liste_adj[x]->suivant;
+    if(liste_adj[x]) 
+        liste_adj[x]->suivant = p;
+    else 
+        liste_adj[x] = p;*/
+    
+}  
+
+
+    /********************************************************************/
+
+    /**************************CONVERSION********************************/
 
 void print_matrix(){ 
     for(int i = 1;i<nb_sommets;i++){ 
@@ -246,21 +287,25 @@ void mat_to_list(){
 }
 
 int main(){
+ //   struct noeud* t ;
     remplir();
     //display_checker();
     //largeur();
     printf("\n");
     printf("\nDepth-first display:\n");
     profondeur();
+    printf("\n-------------------\n");
     printf("\n");
     printf("\n");
     list_to_mat();
+    printf("\nConversion list --> MATRIX\n");
     print_matrix();
+    printf("\n--------------------------");
     printf("\n");
     printf("\n");
     //You can call mat_to_list only after calling liste_to_mat bcuz 
     //we dont have the matrix intialized from the beginning
-    mat_to_list();
+    /*mat_to_list();
 
     printf("\nDepth-first display AFTER MATRIX---> LIST CONVERSION:\n");
     profondeur();
@@ -270,5 +315,20 @@ int main(){
     printf("Largeur\n");
     largeur();
     printf("\n");
+    */
+
+    printf("Composants connexe\n");
+    composant_connexe();
+    printf("------------------\n");
+    /*
+    printf("\nAjout arc 1-->5");
+    printf("\nSommets directs de 1\n");
+    while(t){ 
+        t = liste_adj[1];
+        printf("%u\t",t->s);
+        t = t->suivant;
+    }
+    printf("\n-------------------\n");
+*/
     return 0;
 }
