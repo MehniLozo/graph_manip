@@ -18,6 +18,8 @@
 #define nb_sommets 7
 
 struct noeud* liste_adj[nb_sommets];
+//struct noeud* liste_adj2[nb_sommets]; //for matrix-->liste conversion
+unsigned mat_adj[nb_sommets][nb_sommets];//for liste-->matrix conversion
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 
 unsigned id; //ordre de la visite
@@ -99,7 +101,10 @@ void profondeur()
 
     for(k = 0;k<nb_sommets;k++)
         if(val[k] == 0)
+        {
+            printf("%d\t",k);
             explorer_prof(k);
+        }
 }
 void explorer_larg(unsigned k){
     struct noeud* t;
@@ -185,12 +190,7 @@ void composant_connexe()
    } 
 }
   /**************************CONVERSION********************************/
-/*
-void mat_to_list(){ 
 
-}
-*/
-unsigned mat_adj[nb_sommets][nb_sommets];
 void print_matrix(){ 
     for(int i = 1;i<nb_sommets;i++){ 
         if(i==1){
@@ -214,7 +214,35 @@ void list_to_mat(){
             p = p->suivant;
         }
    } 
-    
+}
+void mat_to_list(){  
+   struct noeud* p ; 
+   /*
+    for(int i = 0;i<nb_sommets;i++){ 
+        for(int j = 0;j<nb_sommets;j++){ 
+            if(mat_adj[i][j] == 1){ 
+                p = (struct noeud*)malloc(sizeof(struct noeud));
+                p->s = j;
+                p->suivant = NULL;
+            }
+            if(liste_adj[i]){ 
+                liste_adj[i]->suivant = p;
+            }else{ 
+                liste_adj[i] = p;
+            }
+        }
+    }
+    */
+    for(int i = 1;i<nb_sommets;i++){ 
+       for(int j = 1;j<nb_sommets;j++){  
+           if(mat_adj[i][j]){
+                p = (struct noeud*)malloc(sizeof(struct noeud));  
+                p->s = j;
+                p->suivant = liste_adj[i]->suivant; 
+                liste_adj[i]->suivant = p;
+           }
+       }
+   }
 }
 
 int main(){
@@ -222,12 +250,25 @@ int main(){
     //display_checker();
     //largeur();
     printf("\n");
+    printf("\nDepth-first display:\n");
     profondeur();
     printf("\n");
     printf("\n");
     list_to_mat();
     print_matrix();
     printf("\n");
+    printf("\n");
+    //You can call mat_to_list only after calling liste_to_mat bcuz 
+    //we dont have the matrix intialized from the beginning
+    mat_to_list();
+
+    printf("\nDepth-first display AFTER MATRIX---> LIST CONVERSION:\n");
+    profondeur();
+    printf("\n");
+    printf("\n");
+    printf("\n");
+    printf("Largeur\n");
+    largeur();
     printf("\n");
     return 0;
 }
