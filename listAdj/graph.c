@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "file_tda_chaine.c"
-#define nb_sommets 4
+#define nb_sommets 7
 
 struct noeud* liste_adj[nb_sommets];
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
@@ -27,7 +27,7 @@ void remplir()
 {
     struct noeud* p;
     int ok = 1;
-    for(int i = 0;i<nb_sommets;i++)
+    for(int i = 1;i<nb_sommets;i++)
     {
         //add elements for the first time tho     
     
@@ -172,7 +172,7 @@ void explorer_connexe(unsigned k)
     {
         if(val[t->s]==0)
             explorer_connexe(t->s);
-        t =t->s;
+    //    t =t->s; //still needs a configuration move
     }
 }
 void composant_connexe()
@@ -184,12 +184,50 @@ void composant_connexe()
         printf("\n\n");
    } 
 }
+  /**************************CONVERSION********************************/
+/*
+void mat_to_list(){ 
+
+}
+*/
+unsigned mat_adj[nb_sommets][nb_sommets];
+void print_matrix(){ 
+    for(int i = 1;i<nb_sommets;i++){ 
+        if(i==1){
+            for(int k = 1;k<nb_sommets;k++)
+                printf("%d\t",k); 
+        }
+        printf("\n");
+        printf("\n");
+        for(int j = 1;j<nb_sommets;j++){ 
+           printf("%d\t",mat_adj[i][j]); 
+        }
+        printf("\n");
+    }
+}
+void list_to_mat(){
+    struct noeud* p ;
+   for(int i = 1;i<nb_sommets;i++){
+         p  = liste_adj[i]; 
+        while(p){
+            mat_adj[i][p->s]  =1; 
+            p = p->suivant;
+        }
+   } 
+    
+}
+
 int main(){
     remplir();
     //display_checker();
     //largeur();
     printf("\n");
     profondeur();
+    printf("\n");
+    printf("\n");
+    list_to_mat();
+    print_matrix();
+    printf("\n");
     printf("\n");
     return 0;
 }
