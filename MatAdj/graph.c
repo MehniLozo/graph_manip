@@ -2,6 +2,7 @@
 //In the following script we'll ignore the "numero(s)" function in order 
 //to get it up and working , we'll just pass in a normal number 
 //NO SOMMET STRUCTURE AT THE MOMENT --> type of s --> unsigned
+#include "graph.h"
 #nb_sommet 6
 unsigned mat_adj[nb_sommet][nb_sommet] = { 
                                              {0,1,1,0,0,0},
@@ -43,9 +44,19 @@ unsigned ieme_succ(unsigned s,unsigned i)
         return j;
     else error();
 }
-/*******************OP_Parcours**************/
+    /*******************OP_Parcours**************/
 //Parcours en profondeur
+    /******************Transitive_closure*******/
+unsigned numero(sommet x){
+   /*This functions configuration is temporary and just for
+    * ease of implementation*/
+   return x.succ;
+                
+}
 
+void ajouter_arc(sommet x,sommet y){ 
+    mat_adj[numero(x)][numero(y)] = 1;
+}
 void main(){
     
 }

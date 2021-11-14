@@ -1,3 +1,3 @@
-struct sommet {
+typedef struct {
     unsigned succ;
-}
+}sommet;
