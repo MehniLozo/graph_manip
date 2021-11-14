@@ -17,7 +17,7 @@
 #include "graph.h"
 #include "file_tda_chaine.c"
 
-#define nb_sommets 5
+#define nb_sommets 4
 
 struct noeud* liste_adj[nb_sommets];
 //struct noeud* liste_adj2[nb_sommets]; //for matrix-->liste conversion
@@ -26,6 +26,7 @@ int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 
 unsigned id; //ordre de la visite
 int circuit; //In order to detect if there is a circuit in our graph
+int found;
 
 
 void remplir()
@@ -207,6 +208,48 @@ void composant_connexe()
         explorer_connexe(i);
    } 
 }
+        /***********************PATH******************/
+void explorer_largeur_path(unsigned k,unsigned y){ 
+   id++;
+   enfiler(k);
+   struct noeud*t ;  
+   while(!file_vide()){ 
+       k = premier();
+       val[k] = id;
+       defiler();
+       t = liste_adj[k];
+       if(k == y){ found = 1; return; }
+       while(t){ 
+           if(val[t->s] == 0){ 
+               enfiler(t->s);
+               val[t->s] = -1;
+           }
+           t = t->suivant;
+       }
+     }
+}
+void path(unsigned x,unsigned y){ 
+   //determins if there exists a way from x --> y 
+   //We'll use the Breadth first search technique
+   creer_file();
+   found = 0;
+   id = 0;
+   for(int i = 0;i<nb_sommets;i++) val[i] = 0;
+   struct noeud* p = liste_adj[x];
+   while(p){ 
+    if(val[p->s] == 0)
+        explorer_largeur_path(p->s,y);
+    if(found){ 
+            printf("\nIl existe un moyen d'aller de %d vers %d\n",x,y);
+            return;
+        }
+    p = p->suivant;
+   }
+   printf("\nIl n'existe pas un moyen de %d --> %d\n",x,y);
+}
+void shortest_path(unsigned x,unsigned y){ 
+    //look for the shortest path x--->y
+}
     /***********************Transitive_Closure***************************/
 //void ajouter_arc(sommet x,sommet y){ //for sake of simplicity
 void ajouter_arc(unsigned x,unsigned y){ 
@@ -321,11 +364,12 @@ void explorer_circuit(unsigned k){
    } 
 }
 void detect_circuit(){ 
-    circuit = 0;
-    id = 0;
     //We're gonna use depth-first parcours (profondeur) in order to detect
     //if our graph contains a circuit(at least one,if we find one --> quit)
-    for(int i = 1;i<nb_sommets;i++) val[i] = 0;
+ 
+    circuit = 0;
+    id = 0;
+   for(int i = 1;i<nb_sommets;i++) val[i] = 0;
 
     for(int i = 1;i<nb_sommets;i++){ 
         if(val[i] == 0) explorer_circuit(i);
@@ -336,7 +380,6 @@ void detect_circuit(){
 }
 int main(){
   //struct noeud* t ;
-    remplir();
     //display_checker();
     //largeur();
     /*printf("\n");
@@ -381,6 +424,8 @@ int main(){
     }
     printf("\n-------------------\n");
 */
+    remplir();
     detect_circuit();
+    path(1,3);
     return 0;
 }
