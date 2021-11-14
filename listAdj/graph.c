@@ -17,7 +17,7 @@
 #include "graph.h"
 #include "file_tda_chaine.c"
 
-#define nb_sommets 6
+#define nb_sommets 5
 
 struct noeud* liste_adj[nb_sommets];
 //struct noeud* liste_adj2[nb_sommets]; //for matrix-->liste conversion
@@ -25,6 +25,7 @@ unsigned mat_adj[nb_sommets][nb_sommets];//for liste-->matrix conversion
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 
 unsigned id; //ordre de la visite
+int circuit; //In order to detect if there is a circuit in our graph
 
 
 void remplir()
@@ -304,13 +305,41 @@ void mat_to_list(){
        }
    }
 }
+            /***********************Circuit*********************/
+void error(){ 
+    printf("\nIl n'yavait aucun circuit\n");
+}
+void explorer_circuit(unsigned k){ 
+    printf("%d\n",k);
+   struct noeud* t = liste_adj[k];
+   id ++;
+   val[k] = id;
+   while(t){ 
+    if(val[t->s] == 0) explorer_circuit(t->s);
+    else {circuit = 1; return;}
+    t = t->suivant;
+   } 
+}
+void detect_circuit(){ 
+    circuit = 0;
+    id = 0;
+    //We're gonna use depth-first parcours (profondeur) in order to detect
+    //if our graph contains a circuit(at least one,if we find one --> quit)
+    for(int i = 1;i<nb_sommets;i++) val[i] = 0;
 
+    for(int i = 1;i<nb_sommets;i++){ 
+        if(val[i] == 0) explorer_circuit(i);
+        if(circuit){ printf("\nIl existe un circuit pour %d\n",i); return;}
+        else error();
+     }
+   
+}
 int main(){
   //struct noeud* t ;
     remplir();
     //display_checker();
     //largeur();
-    printf("\n");
+    /*printf("\n");
     printf("\nDepth-first display:\n");
     profondeur();
     printf("\n-------------------\n");
@@ -334,7 +363,9 @@ int main(){
     printf("Largeur\n");
     largeur();
     printf("\n");
-    
+    printf("\n**********Circuit********\n");
+    detect_circuit();
+    */
 /*
     printf("Composants connexe\n");
     composant_connexe();
@@ -350,5 +381,6 @@ int main(){
     }
     printf("\n-------------------\n");
 */
+    detect_circuit();
     return 0;
 }
