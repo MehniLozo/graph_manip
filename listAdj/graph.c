@@ -165,7 +165,8 @@ unsigned ieme_succ(unsigned i,unsigned s)
     if(p)
         return p->s;
     //return error();
-    return 00;
+    //returned zero supposedly that we don't have 0 as a node tho
+    return 0;
 }
     /************************COMPOSANT CONNEXE**************************/
 void explorer_connexe(unsigned k)
@@ -276,7 +277,7 @@ void list_to_mat(){
 }
 void mat_to_list(){  
    struct noeud* p ; 
-   /*
+/*   
     for(int i = 0;i<nb_sommets;i++){ 
         for(int j = 0;j<nb_sommets;j++){ 
             if(mat_adj[i][j] == 1){ 
@@ -291,7 +292,7 @@ void mat_to_list(){
             }
         }
     }
-    */
+  */  
     for(int i = 1;i<nb_sommets;i++){ 
        for(int j = 1;j<nb_sommets;j++){  
            if(mat_adj[i][j]){
@@ -305,7 +306,7 @@ void mat_to_list(){
 }
 
 int main(){
-  struct noeud* t ;
+  //struct noeud* t ;
     remplir();
     //display_checker();
     //largeur();
@@ -323,7 +324,7 @@ int main(){
     printf("\n");
     //You can call mat_to_list only after calling liste_to_mat bcuz 
     //we dont have the matrix intialized from the beginning
-    /*mat_to_list();
+    mat_to_list();
 
     printf("\nDepth-first display AFTER MATRIX---> LIST CONVERSION:\n");
     profondeur();
@@ -333,12 +334,13 @@ int main(){
     printf("Largeur\n");
     largeur();
     printf("\n");
-    */
-
+    
+/*
     printf("Composants connexe\n");
     composant_connexe();
     printf("------------------\n");
-   /* 
+  */
+    /* 
     printf("\nAjout arc 1-->5");
     printf("\nSommets directs de 1\n");
     while(t){ 
