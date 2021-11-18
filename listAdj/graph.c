@@ -17,11 +17,20 @@
 #include "graph.h"
 #include "file_tda_chaine.c"
 
-#define nb_sommets 5
+#define nb_sommets 7
 
 struct noeud* liste_adj[nb_sommets];
 //struct noeud* liste_adj2[nb_sommets]; //for matrix-->liste conversion
-unsigned mat_adj[nb_sommets][nb_sommets];//for liste-->matrix conversion
+//unsigned mat_adj[nb_sommets][nb_sommets];//for liste-->matrix conversion
+unsigned mat_adj[nb_sommets][nb_sommets] = {
+                        {0,0,0,0,0,0,0},
+                        {0,0,1,0,1,0,0},
+                        {0,0,0,0,0,0,0},
+                        {0,0,0,0,1,0,0},
+                        {0,0,0,1,0,0,1},
+                        {0,0,0,1,1,0,0},
+                        {0,0,0,0,0,1,0}
+};
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 
 unsigned id; //ordre de la visite
@@ -145,20 +154,26 @@ void largeur()
             explorer_larg(k);
 }
         /****************************************************************/
+//unsigned deg_int(sommet s) REPLACED FOR SAKE OF SIMPLICITY
 unsigned deg_int(unsigned s){
-   unsigned nb = 0,j = 0; struct noeud* p= liste_adj[j];
+    //calculate the sum of arcs entering the s node tho
+   unsigned nb = 0; struct noeud* p;
     for(int i = 0;i<nb_sommets;i++) 
-    { while(p && p->s !=s) p=p->suivant;    
+    {
+        p = liste_adj[i]; 
+        while(p && p->s !=s) p=p->suivant;    
       if(p) nb ++;  
     }
     return nb;
     /*Compléxité O(N*P) avec N le nombre de sommets et P le nombre d'arc 
       d'un sommet particulier*/
 }
+//unsigned deg_ext(sommet s)
+//unsigned ieme_succ(unsigned i,sommet s) replaced it for sake of SIMPLCITY
 unsigned ieme_succ(unsigned i,unsigned s)
 {
     unsigned nb = 0;
-    struct noeud* p = liste_adj[s];
+    struct noeud* p = liste_adj[s];//s as the node ,could've been numero(s),just for simplicity's sake
     while(p && nb < i )
     {
         p = p->suivant;
@@ -174,8 +189,8 @@ unsigned ieme_succ(unsigned i,unsigned s)
 void explorer_connexe(unsigned k)
 {
     /*
-     *explorer_connexe : function that checks all the nodes that the current node 
-     can get connected to whether thats directly or inderectly
+     *explorer_connexe : function that checks all the nodes that 
+     can get connected to each others whether thats directly or inderectly
      (via other nodes)
     TODO: FUNC still under maintenance
      * */
@@ -204,7 +219,9 @@ void composant_connexe()
    {
         id = 0;
         printf("\nRound %d\n\n",i);
-        for(int j = 1;j<nb_sommets;j++) val[j] = 0;
+        //every set of node is gonna have its own val array in order
+        //to keep track 
+        for(int j = 1;j<nb_sommets;j++) val[j] = 0; 
         explorer_connexe(i);
    } 
    printf("\n");
@@ -258,6 +275,8 @@ void path(unsigned x,unsigned y){
 //void ajouter_arc(sommet x,sommet y){ //for sake of simplicity
 void ajouter_arc(unsigned x,unsigned y){ 
     //TODO : STILL BUDDY
+    //We didn't specify that much,bcyz we'd know exactly when to call
+    //thats why we didn't conditionize alot :)
     struct noeud* p= (struct noeud*)malloc(sizeof(struct noeud));
     p->s = y;//in reality numero(sommet y);
     

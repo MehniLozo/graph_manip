@@ -48,12 +48,13 @@ int main(){
     }
     printf("\n-------------------\n");
 */
-    remplir();
+    //remplir();
     //detect_circuit();
-    list_to_mat();
     mat_to_list();
     print_matrix();
+    printf("\nDeg int de 2\t%u",deg_int(2));
+    printf("\n2eme succ de 1 est %u\n",ieme_succ(2,1));
     //path(1,3);
-    //composant_connexe();
+    composant_connexe();
     return 0;
 }
