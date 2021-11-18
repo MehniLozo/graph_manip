@@ -49,8 +49,11 @@ int main(){
     printf("\n-------------------\n");
 */
     remplir();
-    detect_circuit();
-    path(1,3);
-    composant_connexe();
+    //detect_circuit();
+    list_to_mat();
+    mat_to_list();
+    print_matrix();
+    //path(1,3);
+    //composant_connexe();
     return 0;
 }

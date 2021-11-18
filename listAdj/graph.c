@@ -315,7 +315,12 @@ void print_matrix(){
 }
 void list_to_mat(){
     struct noeud* p ;
-   for(int i = 1;i<nb_sommets;i++){
+    unsigned i,j;
+    //initialisation
+    for(i = 0;i<nb_sommets;i++)
+        for(j = 0;j<nb_sommets;j++)
+            mat_adj[i][j] = 0;
+   for(i = 1;i<nb_sommets;i++){
          p  = liste_adj[i]; 
         while(p){
             mat_adj[i][p->s]  =1; 
@@ -325,29 +330,35 @@ void list_to_mat(){
 }
 void mat_to_list(){  
    struct noeud* p ; 
-/*   
+  /*
+  //erroneous version tho
     for(int i = 0;i<nb_sommets;i++){ 
         for(int j = 0;j<nb_sommets;j++){ 
             if(mat_adj[i][j] == 1){ 
                 p = (struct noeud*)malloc(sizeof(struct noeud));
                 p->s = j;
-                p->suivant = NULL;
             }
             if(liste_adj[i]){ 
-                liste_adj[i]->suivant = p;
+                p->suivant = liste_adj[i];
             }else{ 
-                liste_adj[i] = p;
+                 p->suivant = NULL;
             }
+            liste_adj[i] = p;
+
         }
-    }
-  */  
-    for(int i = 1;i<nb_sommets;i++){ 
+    }*/
+  
+   for(int i = 1;i<nb_sommets;i++){ 
        for(int j = 1;j<nb_sommets;j++){  
            if(mat_adj[i][j]){
                 p = (struct noeud*)malloc(sizeof(struct noeud));  
                 p->s = j;
-                p->suivant = liste_adj[i]->suivant; 
-                liste_adj[i]->suivant = p;
+                if(liste_adj[i]){
+                    p->suivant = liste_adj[i]->suivant; 
+                    liste_adj[i]->suivant = p;}
+                else {
+                    liste_adj[i] = p; p->suivant = NULL;
+                }
            }
        }
    }
