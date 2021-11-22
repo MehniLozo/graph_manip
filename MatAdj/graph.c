@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include "graph.h"
 #define nb_sommets 7
+unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph matrix
+                        {0,0,0,0,0,0,0},
+                        {0,0,8,0,0,0,0},
+                        {0,0,0,0,0,0,0},
+                        {0,0,0,0,3,0,7},
+                        {0,0,0,4,0,5,0},
+                        {0,0,0,0,7,0,0},
+                        {0,0,0,0,0,6,0}
+};
+
+/*
 unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,0,0,0,0},
                         {0,0,1,0,0,0,0},
@@ -11,7 +22,7 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,0,1,0,0},
                         {0,0,0,0,0,1,0}
 
-};
+};*/
 unsigned val[nb_sommets];
 unsigned id;
 
@@ -49,6 +60,36 @@ void transitive_closure_walshman(){
         for(z = 1;z<nb_sommets;z++)
           if(mat_adj[y][z])
             mat_adj[x][z] = 1;//We dont care whether about the initial state of mat[x][z] whether x & z initially connected or not
+}
+                /************************Shortest Path**************/
+void shortest_paths_WalshmanFloyd(){
+ /*WalshmanFloyd algorithm is applied only on adjacency matrix and specifically weighted-graphs  
+ /Philosophy:
+ if mat[x][y] = 0 : doesn't exist a path from x -> y
+            v != 0 : There exists a path from x -> y with mat[x][y] represents the cost of transition for node x to y 
+    By definition mat[x][y] should always represents the shortest discovered path tho
+ */
+  int x,y,z;
+  for(x = 0;x<nb_sommets;x++)
+    for(y = 0;y<nb_sommets;y++)
+      if(mat_adj[x][y])
+        for(z = 0;z<nb_sommets;z++)
+          if((mat_adj[x][y]*mat_adj[y][z] == 1)&& mat_adj[x][z] > mat_adj[x][y] + mat_adj[y][z])
+            mat_adj[x][z] = mat_adj[x][y] + mat_adj[y][z]; //Just affect the shortest values tho
+}
+void print_matrix(){ 
+    for(int i = 1;i<nb_sommets;i++){ 
+        if(i==1){
+            for(int k = 1;k<nb_sommets;k++)
+                printf("%d\t",k); 
+        }
+        printf("\n");
+        printf("\n");
+        for(int j = 1;j<nb_sommets;j++){ 
+           printf("%d\t",mat_adj[i][j]); 
+        }
+        printf("\n");
+    }
 }
 /*
 

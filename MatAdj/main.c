@@ -4,9 +4,10 @@
 
 
 int main(){
-    profondeur();
-    transitive_closure_walshman();
-    profondeur();
+    print_matrix();
+    printf("\nShortest path application\n");
+    shortest_paths_WalshmanFloyd();
+    print_matrix();
     return 1;
 }
 
