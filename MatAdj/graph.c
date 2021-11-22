@@ -1,16 +1,57 @@
-//Matrice adjacente
-//In the following script we'll ignore the "numero(s)" function in order 
-//to get it up and working , we'll just pass in a normal number 
-//NO SOMMET STRUCTURE AT THE MOMENT --> type of s --> unsigned
+#include <stdio.h>
+#include <stdlib.h>
 #include "graph.h"
-#nb_sommet 6
-unsigned mat_adj[nb_sommet][nb_sommet] = { 
-                                             {0,1,1,0,0,0},
-                                             {0,0,1,0,0,1},
-                                             {0,0,0,0,0,1},
-                                             {0,1,0,0,1,0},
-                                             {0,0,0,0,0,0}
+#define nb_sommets 7
+unsigned mat_adj[nb_sommets][nb_sommets] = {
+                        {0,0,0,0,0,0,0},
+                        {0,0,1,0,0,0,0},
+                        {0,0,0,0,0,0,0},
+                        {0,0,0,0,1,0,0},
+                        {0,0,0,0,0,0,1},
+                        {0,0,0,0,1,0,0},
+                        {0,0,0,0,0,1,0}
+
 };
+unsigned val[nb_sommets];
+unsigned id;
+
+    /*****************Depth-first parcours aka profondeur**********/
+
+void explorer_prof(unsigned k){
+    id++;
+    val[k] = id;
+    printf("\t%d",k);
+
+    for(int s = 1;s<nb_sommets;s++){
+        if(mat_adj[k][s] && !val[s]){
+                    explorer_prof(s);
+            }
+        }
+    }
+
+void profondeur(){
+    int i;
+    id = 0;
+    for(i = 1;i<nb_sommets;i++) val[i] = 0;
+    for(i = 1;i<nb_sommets;i++){
+        if(val[i] == 0)
+            explorer_prof(i);
+
+    }
+    printf("\n");
+}
+
+void transitive_closure_walshman(){
+  int x,y,z;
+  for(x = 1;x<nb_sommets;x++)
+    for(y = 1;y<nb_sommets;y++)
+      if(mat_adj[x][y])
+        for(z = 1;z<nb_sommets;z++)
+          if(mat_adj[y][z])
+            mat_adj[x][z] = 1;//We dont care whether about the initial state of mat[x][z] whether x & z initially connected or not
+}
+/*
+
 void error(){
     printf("\nça n'existe pas\n");
 }
@@ -44,20 +85,19 @@ unsigned ieme_succ(unsigned s,unsigned i)
         return j;
     else error();
 }
+*/
     /*******************OP_Parcours**************/
 //Parcours en profondeur
     /******************Transitive_closure*******/
-unsigned numero(sommet x){
+//unsigned numero(sommet x){
    /*This functions configuration is temporary and just for
     * ease of implementation*/
-   return x.succ;
+  // return x.succ;
                 
-}
+//}
 
-void ajouter_arc(sommet x,sommet y){ 
+/*void ajouter_arc(sommet x,sommet y){ 
     mat_adj[numero(x)][numero(y)] = 1;
 }
-void main(){
-    
-}
+*/
 

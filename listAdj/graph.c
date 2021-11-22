@@ -17,7 +17,7 @@
 #include "graph.h"
 #include "file_tda_chaine.c"
 
-#define nb_sommets 7
+#define nb_sommets 8
 
 struct noeud* liste_adj[nb_sommets];
 //struct noeud* liste_adj2[nb_sommets]; //for matrix-->liste conversion
@@ -27,10 +27,21 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,1,0,1,0,0},
                         {0,0,0,0,0,0,0},
                         {0,0,0,0,1,0,0},
-                        {0,0,0,1,0,0,1},
+                        {0,1,0,1,0,0,1},
                         {0,0,0,1,1,0,0},
                         {0,0,0,0,0,1,0}
 };
+/*unsigned mat_adj[nb_sommets][nb_sommets] = {
+                        {0,0,0,0,0,0,0},
+                        {0,0,1,1,0,0,0},
+                        {0,0,0,1,0,0,1},
+                        {0,0,0,0,0,0,1},
+                        {0,0,1,0,0,1,0},
+                        {0,0,1,0,0,0,0},
+                        {0,0,0,0,0,0,0}
+
+};
+*/
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 
 unsigned id; //ordre de la visite
@@ -118,6 +129,8 @@ void profondeur()
             printf("%d\t",k);
             explorer_prof(k);
         }
+ printf("\n");
+
 }
 void explorer_larg(unsigned k){
     struct noeud* t;
@@ -168,8 +181,17 @@ unsigned deg_int(unsigned s){
     /*Compléxité O(N*P) avec N le nombre de sommets et P le nombre d'arc 
       d'un sommet particulier*/
 }
+
+unsigned arc(unsigned s1,unsigned s2){
+    struct noeud* p = liste_adj[s1];
+    while(p && p->s!= s2) p = p->suivant;
+    if(p) return 1;
+
+    return 0;
+}
 //unsigned deg_ext(sommet s)
 //unsigned ieme_succ(unsigned i,sommet s) replaced it for sake of SIMPLCITY
+
 unsigned ieme_succ(unsigned i,unsigned s)
 {
     unsigned nb = 0;
@@ -273,16 +295,19 @@ void path(unsigned x,unsigned y){
 }*/
     /***********************Transitive_Closure***************************/
 //void ajouter_arc(sommet x,sommet y){ //for sake of simplicity
+unsigned numero(unsigned x){
+    return x; //just for now tho
+}
 void ajouter_arc(unsigned x,unsigned y){ 
     //TODO : STILL BUDDY
     //We didn't specify that much,bcyz we'd know exactly when to call
     //thats why we didn't conditionize alot :)
     struct noeud* p= (struct noeud*)malloc(sizeof(struct noeud));
-    p->s = y;//in reality numero(sommet y);
+    p->s = numero(y);
     
-    p->suivant = liste_adj[x];
+    p->suivant = liste_adj[numero(x)]; 
     
-    liste_adj[x] = p;
+    liste_adj[numero(x)] = p;
     
     /*
      *  The Header-insertion(entéte) doesn't depend on the length
@@ -298,21 +323,26 @@ void ajouter_arc(unsigned x,unsigned y){
         liste_adj[x] = p;
     */
 }  
-
+unsigned nom(unsigned x)
+{
+    return x; //just for now
+}
 void transitive_closure(){  
     /*  So basically we're gonna look through each node and see all of the nodes
      *  that it connects indirectly,each two nodes that are connected 
      *  indirectly should be connected with "ajouter_arc" operation
      * */
-    struct noeud* p ; 
-    for(int i = 0;i<nb_sommets;i++){ 
-       p = liste_adj[i]; 
-       while(p){ 
-            
-           //TODO:TO BE COMPLETED
-           p = p->suivant;
-       }
-     }
+    unsigned k,j,s;
+    for(k = 0;k<nb_sommets;k++){
+        id = 0;
+        for(j = 0;j<nb_sommets;j++) val[j] = 0;
+        explorer_prof(k);
+        for(s = 0;s<nb_sommets;s++)
+            if(s!= k){
+                if(val[s] != 0 && !arc(nom(k),nom(s)))
+                    ajouter_arc(nom(k),nom(s));
+            }
+    }
 }
     /********************************************************************/
 
@@ -382,6 +412,69 @@ void mat_to_list(){
        }
    }
 }
+
+    /*PROFONDUR MATRICE*/
+void explorer_prof_mat(unsigned k){
+    id++;
+    val[k] = id;
+    printf("\t%d",k);
+
+    for(int s = 1;s<nb_sommets;s++){
+        if(mat_adj[k][s] && !val[s]){
+                    explorer_prof_mat(s);
+            }
+        }
+    }
+
+void profondeur_mat(){
+    int i;
+    id = 0;
+    for(i = 1;i<nb_sommets;i++) val[i] = 0;
+    for(i = 1;i<nb_sommets;i++){
+        if(val[i] == 0)
+            explorer_prof_mat(i);
+
+    }
+    printf("\n");
+}
+    /*Largeur matrice*/
+void explorer_larg_mat(unsigned k){
+    int j;
+    id++;
+    val[k] = id;
+    enfiler(k);
+    printf("%d\t",k);
+    while(!file_vide()){
+        k = premier();
+        defiler();
+        
+        for(j = 1;j<nb_sommets;j++)
+            if(mat_adj[k][j] && !val[j])
+            {   
+                val[k] = -1;
+                enfiler(j);
+            }
+    }
+    printf("\n");
+}
+void largeur_mat(){
+     creer_file();
+
+    int i;
+    for(i = 0;i<nb_sommets;i++) val[i] = 0;
+    for(i = 0;i<nb_sommets;i++)
+         //printf("\nRound %d",i);
+        if(val[i] == 0){
+            explorer_larg_mat(i);
+        }
+}
+
+            /******************************************************/
+             /******************************************************/
+
+
+
+
             /***********************Circuit*********************/
 void error(){ 
     printf("\nIl n'yavait aucun circuit\n");
