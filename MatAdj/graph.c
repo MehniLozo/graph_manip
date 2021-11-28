@@ -69,6 +69,7 @@ void shortest_paths_WalshmanFloyd(){
             v != 0 : There exists a path from x -> y with mat[x][y] represents the cost of transition for node x to y 
     By definition mat[x][y] should always represents the shortest discovered path tho
  */
+  //NOTE : TODO STILL FACING A MISFUNCTIONNING
   int x,y,z;
   for(x = 0;x<nb_sommets;x++)
     for(y = 0;y<nb_sommets;y++)
