@@ -102,11 +102,10 @@ void print_matrix(){
         printf("\n");
     }
 }
-/*
 
-void error(){
-    printf("\nça n'existe pas\n");
-}
+
+
+/*
 unsigned deg_ext(unsigned s){
     //on fixe la ligne
     //in the right manner int ligne = numero(s)
@@ -125,6 +124,9 @@ unsigned deg_int(unsigned s){
             nb++;
     }
    return nb; 
+}*/
+void error(){
+    printf("\nça n'existe pas\n");
 }
 unsigned ieme_succ(unsigned s,unsigned i)
 {
@@ -137,19 +139,10 @@ unsigned ieme_succ(unsigned s,unsigned i)
         return j;
     else error();
 }
-*/
-    /*******************OP_Parcours**************/
-//Parcours en profondeur
-    /******************Transitive_closure*******/
-//unsigned numero(sommet x){
-   /*This functions configuration is temporary and just for
-    * ease of implementation*/
-  // return x.succ;
-                
-//}
 
-/*void ajouter_arc(sommet x,sommet y){ 
+//void ajouter_arc(sommet x,sommet y){ 
+void ajouter_arc(unsigned x,unsigned y){ 
     mat_adj[numero(x)][numero(y)] = 1;
 }
-*/
+
 

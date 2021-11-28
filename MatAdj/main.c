@@ -6,6 +6,7 @@
 int main(){
     print_matrix();  
     transitive_closure_warshall();
+    printf("\n---------------TRANSITIVE_CLOSURE_WARSHALL---------------\n");
     printf("\n\n");
     print_matrix();  
   /*
