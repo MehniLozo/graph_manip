@@ -125,21 +125,21 @@ unsigned deg_int(unsigned s){
     }
    return nb; 
 }*/
-void error(){
-    printf("\nça n'existe pas\n");
-}
-unsigned ieme_succ(unsigned s,unsigned i)
+
+int ieme_succ(unsigned s,unsigned i)
 {
     //Complexité O(P) avec P le nombre d'arc 
     unsigned nb = 0,j = 0;
-    while(j<nb_sommet && nb <i) 
+    while(j<nb_sommets && nb <i) 
         if(mat_adj[s][j] == 1)
             nb ++;
-    if(j =< nb_sommets)
+    if(j <=nb_sommets)
         return j;
-    else error();
+    return -1;
 }
-
+unsigned numero(unsigned x){ 
+    return x;
+}
 //void ajouter_arc(sommet x,sommet y){ 
 void ajouter_arc(unsigned x,unsigned y){ 
     mat_adj[numero(x)][numero(y)] = 1;
