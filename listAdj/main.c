@@ -3,8 +3,10 @@
 #include "graph.c"
 
 int main(){
-   list_to_mat();
-   profondeur_mat();
-
+    mat_to_list();
+    print_matrix();
+    transitive_closure();
+    list_to_mat();
+    print_matrix();
    return 1;
 }

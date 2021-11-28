@@ -22,6 +22,7 @@
 struct noeud* liste_adj[nb_sommets];
 //struct noeud* liste_adj2[nb_sommets]; //for matrix-->liste conversion
 //unsigned mat_adj[nb_sommets][nb_sommets];//for liste-->matrix conversion
+/*
 unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,0,0,0,0},
                         {0,0,1,0,1,0,0},
@@ -31,6 +32,18 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,1,1,0,0},
                         {0,0,0,0,0,1,0}
 };
+*/
+/*
+unsigned mat_adj[nb_sommets][nb_sommets] = {
+              {0,0,0,0,0,0,0,0},
+              {0,0,1,0,1,0,0,1},
+              {0,0,0,0,0,1,0,0},
+              {0,0,0,0,1,0,0,0},
+              {0,0,0,1,0,0,1,0},
+              {0,0,0,0,1,0,0,0},
+              {0,0,0,0,0,1,0,0},
+              {0,0,0,0,0,0,0,0}
+ };*/
 /*unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,0,0,0,0},
                         {0,0,1,1,0,0,0},
@@ -42,6 +55,15 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
 
 };
 */
+unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph matrix
+                        {0,0,0,0,0,0,0},
+                        {0,0,8,0,0,0,0},
+                        {0,0,0,0,0,0,0},
+                        {0,0,0,0,3,0,7},
+                        {0,0,0,4,0,5,0},
+                        {0,0,0,0,7,0,0},
+                        {0,0,0,0,0,6,0}
+};
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 
 unsigned id; //ordre de la visite
@@ -353,12 +375,15 @@ void print_matrix(){
         if(i==1){
             for(int k = 1;k<nb_sommets;k++)
                 printf("%d\t",k); 
+        printf("\n");
+        printf("\n");
         }
         printf("\n");
         printf("\n");
         for(int j = 1;j<nb_sommets;j++){ 
            printf("%d\t",mat_adj[i][j]); 
         }
+        printf("\n");
         printf("\n");
     }
 }
@@ -402,6 +427,7 @@ void mat_to_list(){
            if(mat_adj[i][j]){
                 p = (struct noeud*)malloc(sizeof(struct noeud));  
                 p->s = j;
+                p->valeur = mat[i][j];
                 if(liste_adj[i]){
                     p->suivant = liste_adj[i]->suivant; 
                     liste_adj[i]->suivant = p;}
@@ -415,6 +441,7 @@ void mat_to_list(){
 
     /*PROFONDUR MATRICE*/
 void explorer_prof_mat(unsigned k){
+    printf("\n");
     id++;
     val[k] = id;
     printf("\t%d",k);
