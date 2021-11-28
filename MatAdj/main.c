@@ -4,10 +4,16 @@
 
 
 int main(){
+    print_matrix();  
+    transitive_closure_warshall();
+    printf("\n\n");
+    print_matrix();  
+  /*
     print_matrix();
     printf("\nShortest path application\n");
-    shortest_paths_WalshmanFloyd();
-    print_matrix();
+    shortest_paths_WarshallFloyd();
+    print_matrix();*/
+    
     return 1;
 }
 
