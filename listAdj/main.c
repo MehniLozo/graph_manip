@@ -5,7 +5,11 @@
 int main(){
     mat_to_list();
     print_matrix();
-    path(1,6);
+    path(4,1);
+    path(4,7);
+    path(5,3);
+    path(2,1);
+    path(2,6);
     //transitive_closure();
     //list_to_mat();
     //print_matrix();

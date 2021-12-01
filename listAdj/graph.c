@@ -300,6 +300,7 @@ void path(unsigned x,unsigned y){
    for(int i = 0;i<nb_sommets;i++) val[i] = 0;
    struct noeud* p = liste_adj[x];
    while(p){ 
+     printf("Here tho id = %d\n",id);
     if(val[p->s] == 0)
         explorer_largeur_path(p->s,y);
     if(found){ 
@@ -312,10 +313,10 @@ void path(unsigned x,unsigned y){
 }
 
 //TODO:
-/*void shortest_path(unsigned x,unsigned y){ 
+void shortest_path(unsigned x,unsigned y){ 
     //look for the shortest path x--->y
 
-}*/
+}
     /***********************Transitive_Closure***************************/
 //void ajouter_arc(sommet x,sommet y){ //for sake of simplicity
 unsigned numero(unsigned x){
@@ -407,6 +408,8 @@ void mat_to_list(){
    struct noeud* p ; 
   
   //erroneous version tho
+  ///*
+  /*
     for(int i = 0;i<nb_sommets;i++){ 
         for(int j = 0;j<nb_sommets;j++){ 
             if(mat_adj[i][j] == 1){ 
@@ -422,14 +425,14 @@ void mat_to_list(){
 
         }
     }
-  
-   /*
+  */
+   
    for(int i = 1;i<nb_sommets;i++){ 
        for(int j = 1;j<nb_sommets;j++){  
            if(mat_adj[i][j]){
                 p = (struct noeud*)malloc(sizeof(struct noeud));  
                 p->s = j;
-                p->valeur = mat[i][j];
+                p->val = mat_adj[i][j];
                 if(liste_adj[i]){
                     p->suivant = liste_adj[i]->suivant; 
                     liste_adj[i]->suivant = p;}
@@ -438,7 +441,7 @@ void mat_to_list(){
                 }
            }
        }
-   }*/
+   }
 }
 
     /*PROFONDUR MATRICE*/
