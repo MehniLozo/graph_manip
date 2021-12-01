@@ -79,7 +79,7 @@ void shortest_paths_WarshallFloyd(){
   unsigned x,y,z;
   for(x = 0;x<nb_sommets;x++)
     for(y = 0;y<nb_sommets;y++)
-      //if(mat_adj[x][y])
+      //if(mat_adj[x][y]) //necessary instead of looping wastefully in case of [x][y] = 0
         for(z = 0;z<nb_sommets;z++)
           if((mat_adj[x][y]*mat_adj[y][z] != 0 && x!= z))
               if((mat_adj[x][y] + mat_adj[y][z] < mat_adj[x][z]) || mat_adj[x][z] == 0)

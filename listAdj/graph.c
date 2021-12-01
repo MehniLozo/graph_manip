@@ -33,17 +33,17 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,0,0,1,0}
 };
 */
-/*
+
 unsigned mat_adj[nb_sommets][nb_sommets] = {
               {0,0,0,0,0,0,0,0},
               {0,0,1,0,1,0,0,1},
-              {0,0,0,0,0,1,0,0},
+              {0,0,0,0,0,0,0,0},
               {0,0,0,0,1,0,0,0},
               {0,0,0,1,0,0,1,0},
               {0,0,0,0,1,0,0,0},
               {0,0,0,0,0,1,0,0},
               {0,0,0,0,0,0,0,0}
- };*/
+ };
 /*unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,0,0,0,0},
                         {0,0,1,1,0,0,0},
@@ -55,6 +55,7 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
 
 };
 */
+/*
 unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph matrix
                         {0,0,0,0,0,0,0},
                         {0,0,8,0,0,0,0},
@@ -63,7 +64,7 @@ unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph matrix
                         {0,0,0,4,0,5,0},
                         {0,0,0,0,7,0,0},
                         {0,0,0,0,0,6,0}
-};
+};*/
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 
 unsigned id; //ordre de la visite
@@ -404,7 +405,7 @@ void list_to_mat(){
 }
 void mat_to_list(){  
    struct noeud* p ; 
-  /*
+  
   //erroneous version tho
     for(int i = 0;i<nb_sommets;i++){ 
         for(int j = 0;j<nb_sommets;j++){ 
@@ -420,8 +421,9 @@ void mat_to_list(){
             liste_adj[i] = p;
 
         }
-    }*/
+    }
   
+   /*
    for(int i = 1;i<nb_sommets;i++){ 
        for(int j = 1;j<nb_sommets;j++){  
            if(mat_adj[i][j]){
@@ -436,7 +438,7 @@ void mat_to_list(){
                 }
            }
        }
-   }
+   }*/
 }
 
     /*PROFONDUR MATRICE*/
