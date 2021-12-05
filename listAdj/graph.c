@@ -17,7 +17,8 @@
 #include "graph.h"
 #include "file_tda_chaine.c"
 
-#define nb_sommets 8
+#define nb_sommets 7
+#define nb_edges 100
 
 struct noeud* liste_adj[nb_sommets];
 //struct noeud* liste_adj2[nb_sommets]; //for matrix-->liste conversion
@@ -46,7 +47,7 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
               {0,0,0,0,0,0,0,0}
  };
  */
-unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph
+/*unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph
               {0,0,0,0,0,0,0,0},
               {0,0,3,0,1,0,0,5},
               {0,0,0,0,0,4,0,0},
@@ -55,7 +56,7 @@ unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph
               {0,0,0,0,8,0,0,0},
               {0,0,0,0,0,5,0,0},
               {0,0,0,0,0,0,0,0}
- };
+ };*/
 
 /*unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,0,0,0,0},
@@ -79,8 +80,20 @@ unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph matrix
                         {0,0,0,0,0,6,0}
 };
 */
-int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
+unsigned mat_adj[nb_sommets][nb_sommets] = { //undirected & weighted graph
+    {0,0,0,0,0,0,0},
+    {0,0,1320,0,0,0,2640},
+    {0,1320,0,1160,850,835,920},
+    {0,0,1160,0,0,780,2880},
+    {0,0,850,0,0,0,0},
+    {0,0,835,780,0,0,750},
+    {0,2640,920,2880,0,750,0}
+};
 
+int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
+unsigned T[nb_sommets]; //T for MST
+struct edge edges[nb_edges];
+unsigned current_edge = 0;
 unsigned id; //ordre de la visite
 int circuit; //In order to detect if there is a circuit in our graph
 int found;
@@ -554,4 +567,31 @@ void detect_circuit(){
         else error();
      }
    
+}
+                /*Spanning tree*/
+void minimum_spanning_tree(){
+    //Kruskal implementation with Matrix
+    //Sort the edges of the graph G (give each one of them a number)
+    //allocate randomly in case of equality
+    unsigned k = 1; unsigned i = 0; unsigned j = 0;
+    /*T represents the Tree subset of Graph G acyclic and connexe
+      T should be an array thats gonna hold the nodes in order
+      based on their costs(each edge has a cost and that edge is 
+      integrated with the node tho)
+        T is initially empty tho
+    */
+   //First Step sorting edges:
+    for(i;i<nb_sommets;i++){
+        for(j;j<nb_sommets;j++){
+            if(mat_adj[i][j] != 0)
+            {
+               /* unsigned p = 0;
+                while(mat_adj[i][j] > edges[p] && p<nb_edges)
+                    p++;
+                edges[p] = mat_adj[i][j]; //put it in the right pos
+            */
+           }
+        }
+    }
+
 }

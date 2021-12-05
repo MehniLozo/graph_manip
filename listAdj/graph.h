@@ -4,6 +4,7 @@ struct noeud{
     struct noeud* suivant;
 };
 
+
 void remplir();
 void display_checker();
 void explorer_prof(unsigned k);
