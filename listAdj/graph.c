@@ -9,7 +9,7 @@
         -Use the "remplir" function to describe your graph inside the 
             ajacent list
         -Use 'display_checker' function in order to verify your 
-            graph input rightness
+            graph input architecture
  * */
 
 #include <stdlib.h>
@@ -34,6 +34,7 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
 };
 */
 
+/*
 unsigned mat_adj[nb_sommets][nb_sommets] = {
               {0,0,0,0,0,0,0,0},
               {0,0,1,0,1,0,0,1},
@@ -44,6 +45,18 @@ unsigned mat_adj[nb_sommets][nb_sommets] = {
               {0,0,0,0,0,1,0,0},
               {0,0,0,0,0,0,0,0}
  };
+ */
+unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph
+              {0,0,0,0,0,0,0,0},
+              {0,0,3,0,1,0,0,5},
+              {0,0,0,0,0,4,0,0},
+              {0,0,0,0,4,0,0,0},
+              {0,0,0,2,0,0,2,0},
+              {0,0,0,0,8,0,0,0},
+              {0,0,0,0,0,5,0,0},
+              {0,0,0,0,0,0,0,0}
+ };
+
 /*unsigned mat_adj[nb_sommets][nb_sommets] = {
                         {0,0,0,0,0,0,0},
                         {0,0,1,1,0,0,0},
@@ -64,7 +77,8 @@ unsigned mat_adj[nb_sommets][nb_sommets] = { //weighted graph matrix
                         {0,0,0,4,0,5,0},
                         {0,0,0,0,7,0,0},
                         {0,0,0,0,0,6,0}
-};*/
+};
+*/
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 
 unsigned id; //ordre de la visite
@@ -295,6 +309,7 @@ void path(unsigned x,unsigned y){
    //determins if there exists a way from x --> y 
    //We'll use the Breadth first search technique
    creer_file();
+   unsigned cout = 0;
    found = 0;
    id = 0;
    for(int i = 0;i<nb_sommets;i++) val[i] = 0;
@@ -304,7 +319,9 @@ void path(unsigned x,unsigned y){
     if(val[p->s] == 0)
         explorer_largeur_path(p->s,y);
     if(found){ 
-            printf("\nIl existe un moyen d'aller de %d vers %d\n",x,y);
+            for(int j = 0;j<nb_sommets;j++)
+              cout += j;
+            printf("\nIl existe un moyen d'aller de %d vers %d avec cout = %d\n",x,y,cout);
             return;
         }
     p = p->suivant;
@@ -313,10 +330,11 @@ void path(unsigned x,unsigned y){
 }
 
 //TODO:
+/*
 void shortest_path(unsigned x,unsigned y){ 
     //look for the shortest path x--->y
 
-}
+}*/
     /***********************Transitive_Closure***************************/
 //void ajouter_arc(sommet x,sommet y){ //for sake of simplicity
 unsigned numero(unsigned x){

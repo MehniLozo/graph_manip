@@ -10,6 +10,8 @@ int main(){
     path(5,3);
     path(2,1);
     path(2,6);
+    printf("\nParcours profondeur\n");
+    profondeur();
     //transitive_closure();
     //list_to_mat();
     //print_matrix();
