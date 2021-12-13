@@ -54,6 +54,7 @@ void profondeur(){
 }
 
 void transitive_closure_warshall(){
+    //THIS IS THE "WHARSHALL ALGORITHM"
   int x,y,z;
   for(x = 1;x<nb_sommets;x++)
     for(y = 1;y<nb_sommets;y++)

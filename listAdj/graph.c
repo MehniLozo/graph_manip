@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include "graph.h"
 #include "file_tda_chaine.c"
+//#include "../MatAdj/graph.c"
 
 #define nb_sommets 7
 #define nb_edges 100
@@ -92,8 +93,6 @@ unsigned mat_adj[nb_sommets][nb_sommets] = { //undirected & weighted graph
 
 int val[nb_sommets]; //variable pour memoriser l'etat d'un sommet visité ou non
 unsigned T[nb_sommets]; //T for MST
-struct edge edges[nb_edges];
-unsigned current_edge = 0;
 unsigned id; //ordre de la visite
 int circuit; //In order to detect if there is a circuit in our graph
 int found;
@@ -420,6 +419,7 @@ void print_matrix(){
         printf("\n");
     }
 }
+                            /*CONVERSIONS*/
 void list_to_mat(){
     struct noeud* p ;
     unsigned i,j;
@@ -474,8 +474,24 @@ void mat_to_list(){
        }
    }
 }
-
-    /*PROFONDUR MATRICE*/
+                    /*************Warshall applied to adjacency list*************/
+void Warshall_list(){
+    /*
+    Well,the act in here is to transform your current adjacency list graph into a matrix graph
+    so as a result you can exploit the original Warshall's algorithm
+    */
+   list_to_mat();
+   for(int i = 0;i<nb_sommets;i++){
+       for(int j = 0;j<nb_sommets;j++){
+           if(mat_adj[i][j])
+            for(int k = 0;k<nb_sommets;k++)
+                mat_adj[i][k] = 1;
+       }
+   }
+   mat_to_list();
+}
+                    /************************************/
+                    /*PROFONDUR MATRICE*/
 void explorer_prof_mat(unsigned k){
     printf("\n");
     id++;
