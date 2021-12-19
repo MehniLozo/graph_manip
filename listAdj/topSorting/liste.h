@@ -5,6 +5,6 @@ struct noeud_tete {
     struct noeud_queue{ 
         struct noeud_tete* id; 
         struct noeud_queue* suivant;
-    }* succ
+    }* succ;
 
-}
+};
