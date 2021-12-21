@@ -3,3 +3,4 @@ listAdj/spanning.c
 MatAdj/main
 listAdj/topSorting/liste
 *.swp
+listAdj/topSorting/*.sh

@@ -491,7 +491,7 @@ void Warshall_list(){
    mat_to_list();
 }
                     /************************************/
-                    /*PROFONDUR MATRICE*/
+                    /*Depth-first parcours MATRICE*/
 void explorer_prof_mat(unsigned k){
     printf("\n");
     id++;
