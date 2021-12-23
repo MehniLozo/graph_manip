@@ -217,8 +217,8 @@ void largeur()
 }
         /****************************************************************/
 //unsigned deg_int(sommet s) REPLACED FOR SAKE OF SIMPLICITY
-unsigned deg_int(unsigned s){
-    //calculate the sum of arcs entering the s node tho
+unsigned deg_ext(unsigned s){
+    //calculate the sum of number of arcs entering node 
    unsigned nb = 0; struct noeud* p;
     for(int i = 0;i<nb_sommets;i++) 
     {
@@ -231,7 +231,8 @@ unsigned deg_int(unsigned s){
       d'un sommet particulier*/
 }
 //unsigned deg_ext(sommet s){ 
-unsigned deg_ext(unsigned s){ 
+unsigned deg_int(unsigned s){ 
+    //calculate the sum of arcs departuring from node S
     struct noeud* p = liste_adj[s];
     unsigned cp = 0;
     while(p)
