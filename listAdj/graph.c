@@ -230,6 +230,18 @@ unsigned deg_int(unsigned s){
     /*Compléxité O(N*P) avec N le nombre de sommets et P le nombre d'arc 
       d'un sommet particulier*/
 }
+//unsigned deg_ext(sommet s){ 
+unsigned deg_ext(unsigned s){ 
+    struct noeud* p = liste_adj[s];
+    unsigned cp = 0;
+    while(p)
+    {
+        p = p->suivant;
+        cp ++; 
+    }
+    return cp;
+}
+
 
 unsigned arc(unsigned s1,unsigned s2){
     struct noeud* p = liste_adj[s1];
@@ -238,7 +250,6 @@ unsigned arc(unsigned s1,unsigned s2){
 
     return 0;
 }
-//unsigned deg_ext(sommet s)
 //unsigned ieme_succ(unsigned i,sommet s) replaced it for sake of SIMPLCITY
 
 unsigned ieme_succ(unsigned i,unsigned s)
@@ -589,7 +600,8 @@ void minimum_spanning_tree(){
     //Kruskal implementation with Matrix
     //Sort the edges of the graph G (give each one of them a number)
     //allocate randomly in case of equality
-    unsigned k = 1; unsigned i = 0; unsigned j = 0;
+    //unsigned k = 1;
+     unsigned i,j;
     /*T represents the Tree subset of Graph G acyclic and connexe
       T should be an array thats gonna hold the nodes in order
       based on their costs(each edge has a cost and that edge is 
@@ -597,8 +609,8 @@ void minimum_spanning_tree(){
         T is initially empty tho
     */
    //First Step sorting edges:
-    for(i;i<nb_sommets;i++){
-        for(j;j<nb_sommets;j++){
+    for(i= 0;i<nb_sommets;i++){
+        for(j=0;j<nb_sommets;j++){
             if(mat_adj[i][j] != 0)
             {
                /* unsigned p = 0;
