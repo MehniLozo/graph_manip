@@ -197,7 +197,7 @@ void explorer_larg(unsigned k){
             if(val[t->s] == 0)
             {
                 enfiler(t->s);
-                val[t->s] = -1;
+                val[t->s] = -1; // "-1" : In the stack and waiting for the process,no need to enstack
             }
             t = t->suivant;
          }
@@ -293,7 +293,9 @@ void explorer_connexe(unsigned k)
 }
 void composant_connexe()
 {
-    /*Cost of Complexity : n*(cost of exploring) with n : number of nodes
+    /*  
+      List all nodes that are accessible directly or indirectly 
+      Cost of Complexity : n*(cost of exploring) with n : number of nodes
      *  n+p : cost of exploring
      *  --> O(n*(n+p))
      *  NOTE: if the graph is represented via an adjacent matrix --> O(pow(n,3))
@@ -324,13 +326,16 @@ void explorer_largeur_path(unsigned k,unsigned y){
            if(val[t->s] == 0){ 
                enfiler(t->s);
                val[t->s] = -1;
+               //in order to keep it marked and not to add the node multiple times to the stack
+               //we give its vals reference -1 in order to tell that its already in the stack
+               //and waiting for process
            }
            t = t->suivant;
        }
      }
 }
 void path(unsigned x,unsigned y){ 
-   //determins if there exists a way from x --> y 
+   //determins if there exists a way from x --> y and prints the cost of linking
    //We'll use the Breadth first search technique
    creer_file();
    unsigned cout = 0;
@@ -343,8 +348,9 @@ void path(unsigned x,unsigned y){
     if(val[p->s] == 0)
         explorer_largeur_path(p->s,y);
     if(found){ 
-            for(int j = 0;j<nb_sommets;j++)
-              cout += j;
+            for(int j = 0;j<nb_sommets;j++) 
+              if(val[j]) //double check pls,we could've taken the id righT?
+                cout++;
             printf("\nIl existe un moyen d'aller de %d vers %d avec cout = %d\n",x,y,cout);
             return;
         }
@@ -353,12 +359,6 @@ void path(unsigned x,unsigned y){
    printf("\nIl n'existe pas un moyen de %d --> %d\n",x,y);
 }
 
-//TODO:
-/*
-void shortest_path(unsigned x,unsigned y){ 
-    //look for the shortest path x--->y
-
-}*/
     /***********************Transitive_Closure***************************/
 //void ajouter_arc(sommet x,sommet y){ //for sake of simplicity
 unsigned numero(unsigned x){
@@ -396,7 +396,14 @@ unsigned nom(unsigned x)
 void transitive_closure(){  
     /*  So basically we're gonna look through each node and see all of the nodes
      *  that it connects indirectly,each two nodes that are connected 
-     *  indirectly should be connected with "ajouter_arc" operation
+     *  indirectly should be connected with "ajouter_arc" operation --> Direct Linking
+
+        We actually took advantage of "explorer_prof" function in order to fill the val
+        array for us.
+        We're gonna interpret whether there is a link between x and y with the Val[] != 0
+        and also if x and y are direct with arc() function.
+
+        NOTE: There is a Transitive Closure applied on an adjacency matrix by Warshall Algorithm
      * */
     unsigned k,j,s;
     for(k = 0;k<nb_sommets;k++){
@@ -490,7 +497,7 @@ void mat_to_list(){
 void Warshall_list(){
     /*
     Well,the act in here is to transform your current adjacency list graph into a matrix graph
-    so as a result you can exploit the original Warshall's algorithm
+    so as a result you can exploit the original Warshall's algorithm "Transitive closure"
     */
    list_to_mat();
    for(int i = 0;i<nb_sommets;i++){

@@ -7,6 +7,7 @@ int main(){
     print_matrix();
     printf("\nentered here\n");
     printf("\ndegre int de %d est %d\n",3,deg_ext(3));
+    composant_connexe();
     /*
     path(4,1);
     path(4,7);

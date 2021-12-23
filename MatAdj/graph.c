@@ -54,33 +54,33 @@ void profondeur(){
 }
 
 void transitive_closure_warshall(){
-    //THIS IS THE "WHARSHALL ALGORITHM"
+    //ORIGINAL "WHARSHALL ALGORITHM"
   int x,y,z;
   for(x = 1;x<nb_sommets;x++)
     for(y = 1;y<nb_sommets;y++)
       if(mat_adj[x][y])
         for(z = 1;z<nb_sommets;z++)
           if(mat_adj[y][z])
-            mat_adj[x][z] = 1;//We dont care whether about the initial state of mat[x][z] whether x & z initially connected or not
+            mat_adj[x][z] = 1;
+  //We dont care whether about the initial state of mat[x][z] whether x & z initially connected or not
   //Complexity of the previous algo is O(n^3) with n = number of nodes
 }
                 /************************Shortest Path**************/
 void shortest_paths_WarshallFloyd(){
- /*WalshmanFloyd algorithm is applied only on adjacency matrix and specifically weighted-graphs  
-  The following algorithm uses almost the same concept of Transitive closure Washall algorithm 
+ /*Warshall-Floyd algorithm is applied only on adjacency matrix and specifically weighted-graphs  
+  The following algorithm uses almost the same concept of Transitive closure Warshall algorithm 
   Mat[i][j] != 0 :
         -Warshall : there exists a way from x -> y
         -Floyd : Its the shortest known way at this current moment to go from x -> y
   Both Philosophies Combined :
- if mat[x][y] = 0 : doesn't exist a path from x -> y
-            v != 0 : There exists a path from x -> y with mat[x][y] represents the cost of transition for node x to y 
+ if mat[x][y] = 0 : doesn't exist a path from x -> y ; at least till this moment
+             != 0 : There exists a path from x -> y with mat[x][y] represents the cost of transition for node x to y 
     By definition mat[x][y] should always represents the shortest discovered path tho
  */
-  //NOTE : TODO STILL FACING A MISFUNCTIONNING
   unsigned x,y,z;
   for(x = 0;x<nb_sommets;x++)
     for(y = 0;y<nb_sommets;y++)
-      //if(mat_adj[x][y]) //necessary instead of looping wastefully in case of [x][y] = 0
+      if(mat_adj[x][y]) //necessary instead of looping wastefully in case of [x][y] = 0
         for(z = 0;z<nb_sommets;z++)
           if((mat_adj[x][y]*mat_adj[y][z] != 0 && x!= z))
               if((mat_adj[x][y] + mat_adj[y][z] < mat_adj[x][z]) || mat_adj[x][z] == 0)
