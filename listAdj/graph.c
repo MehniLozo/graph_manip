@@ -332,7 +332,7 @@ void path(unsigned x,unsigned y){
         explorer_largeur_path(p->s,y);
     if(found){ 
             for(int j = 0;j<nb_sommets;j++)
-              cout += j;
+              cout += j; //what defines the cost??
             printf("\nIl existe un moyen d'aller de %d vers %d avec cout = %d\n",x,y,cout);
             return;
         }
