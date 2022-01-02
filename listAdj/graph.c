@@ -183,7 +183,7 @@ void profondeur()
 }
 void explorer_larg(unsigned k){
     struct noeud* t;
-    enfiler(k);
+    enfiler(k); //A FUCKING QUEUE
     while(!file_vide())
     {
         k = premier();
@@ -337,7 +337,7 @@ void explorer_largeur_path(unsigned k,unsigned y){
 void path(unsigned x,unsigned y){ 
    //determins if there exists a way from x --> y and prints the cost of linking
    //We'll use the Breadth first search technique
-   creer_file();
+   creer_file(); //A FUCKING QUEUE
    unsigned cout = 0;
    found = 0;
    id = 0;
@@ -348,14 +348,11 @@ void path(unsigned x,unsigned y){
     if(val[p->s] == 0)
         explorer_largeur_path(p->s,y);
     if(found){ 
-<<<<<<< HEAD
-            for(int j = 0;j<nb_sommets;j++)
-              cout += j; //what defines the cost??
-=======
+            /*for(int j = 0;j<nb_sommets;j++)
+              cout += j;*/ //what defines the cost??
             for(int j = 0;j<nb_sommets;j++) 
               if(val[j]) //double check pls,we could've taken the id righT?
                 cout++;
->>>>>>> 6b6411d950f405e61a5f63b912efea8e4c6f4d4a
             printf("\nIl existe un moyen d'aller de %d vers %d avec cout = %d\n",x,y,cout);
             return;
         }
