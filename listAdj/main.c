@@ -5,6 +5,10 @@
 int main(){
     mat_to_list();
     print_matrix();
+    printf("\nentered here\n");
+    printf("\ndegre int de %d est %d\n",3,deg_ext(3));
+    composant_connexe();
+    /*
     path(4,1);
     path(4,7);
     path(5,3);
@@ -14,6 +18,7 @@ int main(){
     profondeur();
     //transitive_closure();
     //list_to_mat();
-    //print_matrix();
+    //print_matrix();*/
+    
    return 1;
 }
