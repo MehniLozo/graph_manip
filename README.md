@@ -1,6 +1,7 @@
 # Graph
 ## What is It?
-This Repo has a set of a collection of various Graph representations and operations that are possible on the graph
+This Repo has a set of a collection of various Graph representations and operations that are possible 
+Some used to or rather say BOILERPLATE code for future utilizations
 ## Representations
 ### Adjacency Matrix
 ### Adjacency List

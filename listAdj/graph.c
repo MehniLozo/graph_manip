@@ -216,8 +216,8 @@ void largeur()
             explorer_larg(k);
 }
         /****************************************************************/
-//unsigned deg_int(sommet s) REPLACED FOR SAKE OF SIMPLICITY
-unsigned deg_ext(unsigned s){
+//unsigned deg_int(sommet s) REPLACED FOR SAKE OF SIMPLICITY // d-
+unsigned deg_int(unsigned s){
     //calculate the sum of number of arcs entering node 
    unsigned nb = 0; struct noeud* p;
     for(int i = 0;i<nb_sommets;i++) 
@@ -230,8 +230,8 @@ unsigned deg_ext(unsigned s){
     /*Compléxité O(N*P) avec N le nombre de sommets et P le nombre d'arc 
       d'un sommet particulier*/
 }
-//unsigned deg_ext(sommet s){ 
-unsigned deg_int(unsigned s){ 
+//unsigned deg_ext(sommet s){ //d+
+unsigned deg_ext(unsigned s){ 
     //calculate the sum of arcs departuring from node S
     struct noeud* p = liste_adj[s];
     unsigned cp = 0;
@@ -275,7 +275,6 @@ void explorer_connexe(unsigned k)
      *explorer_connexe : function that checks all the nodes that 
      can get connected to each others whether thats directly or inderectly
      (via other nodes)
-    TODO: FUNC still under maintenance
      * */
     struct noeud* t;
     //printf("%c  ",nom(k));
@@ -337,7 +336,7 @@ void explorer_largeur_path(unsigned k,unsigned y){
 void path(unsigned x,unsigned y){ 
    //determins if there exists a way from x --> y and prints the cost of linking
    //We'll use the Breadth first search technique
-   creer_file(); //A FUCKING QUEUE
+   creer_file(); 
    unsigned cout = 0;
    found = 0;
    id = 0;
@@ -348,10 +347,8 @@ void path(unsigned x,unsigned y){
     if(val[p->s] == 0)
         explorer_largeur_path(p->s,y);
     if(found){ 
-            /*for(int j = 0;j<nb_sommets;j++)
-              cout += j;*/ //what defines the cost??
             for(int j = 0;j<nb_sommets;j++) 
-              if(val[j]) //double check pls,we could've taken the id righT?
+              if(val[j]) 
                 cout++;
             printf("\nIl existe un moyen d'aller de %d vers %d avec cout = %d\n",x,y,cout);
             return;
