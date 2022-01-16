@@ -611,25 +611,13 @@ void minimum_spanning_tree(){
     //Sort the edges of the graph G (give each one of them a number)
     //allocate randomly in case of equality
     //unsigned k = 1;
-     unsigned i,j;
     /*T represents the Tree subset of Graph G acyclic and connexe
       T should be an array thats gonna hold the nodes in order
       based on their costs(each edge has a cost and that edge is 
       integrated with the node tho)
         T is initially empty tho
     */
-   //First Step sorting edges:
-    for(i= 0;i<nb_sommets;i++){
-        for(j=0;j<nb_sommets;j++){
-            if(mat_adj[i][j] != 0)
-            {
-               /* unsigned p = 0;
-                while(mat_adj[i][j] > edges[p] && p<nb_edges)
-                    p++;
-                edges[p] = mat_adj[i][j]; //put it in the right pos
-            */
-           }
-        }
-    }
+    //TO BE CONTINUED
+   
 
 }
